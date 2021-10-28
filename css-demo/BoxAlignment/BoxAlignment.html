@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .item {
+      border: 2px solid #608ba8;
+      border-radius: 4px;
+      background: #dfe8ee;
+
+    }
+
+    /* 
+      ### 容器样式
+      布局有弹性、网格、浮动、静态（也就是默认）
+      水平对齐使用：justify-content 
+      垂直对齐使用：align-items
+      间距使用：gap
+
+      ### 子项样式
+      水平对齐使用：justify-self
+      垂直对齐使用：align-self
+    */
+    #gridContainer {
+      display: grid;
+      width: 540px;
+      grid-template-columns: repeat(3, 1fr);
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px 40px;
+    }
+
+    #gridContainer :first-child {
+      align-self: flex-start;
+      
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <div id="gridContainer">
+    <div class="item">One</div>
+    <div class="item">Two</div>
+    <div class="item">Three
+      <br>has
+      <br>extra
+      <br>text
+    </div>
+    <div class="item">Four</div>
+    <div class="item">Five</div>
+    <div class="item">Six</div>
+  </div>
+</body>
+
+</html>
