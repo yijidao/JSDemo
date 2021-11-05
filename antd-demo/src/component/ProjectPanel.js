@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import './ProjectPanel.less';
 
 export default class ProjectPanel extends Component {
   // static propTypes = {
