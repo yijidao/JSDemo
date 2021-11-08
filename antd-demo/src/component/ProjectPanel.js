@@ -2,52 +2,91 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './ProjectPanel.less';
 import { Row, Col } from 'antd';
+import Icon from '@ant-design/icons';
+import { HomeSvg, StarSvg, UnStarSvg } from './Svg.js';
 
 export default class ProjectPanel extends Component {
-  // static propTypes = {
-  //   prop: PropTypes
-  // }
+
+  state = {
+    lines: []
+  };
+
+  componentDidMount() {
+    let lines = [];
+    for (let i = 1;i <= 18;i++) {
+      let stations = [];
+      for (let j = 1;j <= 15;j++) {
+        stations.push({
+          id: j,
+          name: `${i}号线_${j}站`,
+        })
+      }
+
+      lines.push(
+        {
+          id: i,
+          name: `${i}号线`,
+          selected: false,
+          stations: stations
+        });
+    }
+
+    this.setState({ lines: lines });
+  }
+
+  componentWillUnmount() {
+
+  }
+
+  changeSelected = (id, e) => {
+    let lines2 = this.state.lines.map(x => x.id === id ? { ...x, selected: true } : { ...x, selected: false });
+    this.setState({ lines: lines2 });
+  }
+
 
   render() {
+    let lines = this.state.lines;
+    let selectedLine = lines.filter(x => x.selected)[0];
+    let stations = selectedLine ? selectedLine.stations : [];
 
     return (
-
       <div className='container'  >
-        {/* <div className='header'>
-          <span >线网全景</span>
-        </div> */}
-        <Row style={{ height: '48px', borderBottom: '1px solid #17557F', alignContent:'center', paddingLeft:'18px', paddingRight:'18px'}}>
-          <svg  t="1636106405250" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7201" width="16" height="16"><path d="M0.099987 455.792136v65.77165h86.379034v502.436214h277.934716V694.301856h300.191889v329.698144h274.805113v-497.136887h84.559265v-71.070977L512.034996 0.129983z" fill="#13FFF5" p-id="7202"></path></svg>
-          <span style={{ margin: '0 16px', color: '#13FFF5'}}>线网全景</span>
+        <Row style={{ height: '48px', borderBottom: '1px solid #17557F', alignContent: 'center', paddingLeft: '18px', paddingRight: '18px' }}>
+          <Icon component={HomeSvg} style={{ height: '16px', width: '16px', color: '#13FFF5', alignSelf: 'center' }} />
+          <span style={{ margin: '0 16px', color: '#13FFF5' }}>线网全景</span>
         </Row>
-          <Row>
-            <Col span={8}>
-              <ul>
-                <li>坑口</li>
-                <li>烈士陵园</li>
-                <li>东山口</li>
-              </ul>
-            </Col>
-            <Col span={8}>
-              <ul>
-                <li>一号线</li>
-                <li>二号线</li>
-                <li>三号线</li>
-                <li>四号线</li>
-              </ul>
-            </Col>
-            <Col span={8}>
-              <ul>
-                <li>西朗</li>
-                <li>坑口</li>
-                <li>花地湾</li>
-                <li>芳村</li>
-                <li>黄沙</li>
-              </ul>
-            </Col>
+        <Row>
+          <Col span={8} style={{ borderRight: '1px solid #17557F' }}>
+            <ul>
+              <li>坑口</li>
+              <li>烈士陵园</li>
+              <li>东山口</li>
+            </ul>
+          </Col>
+          <Col span={8} >
+            <ul>
+              {lines.map(x => <li onClick={(e) => this.changeSelected(x.id, e)} className={x.selected ? 'selected' : ''}>{x.name}</li>)}
+            </ul>
+          </Col>
+          <Col span={8} >
+            <ul>
+              {stations.map(x =>
+                <li >
+                  {x.name}
+                  {/* <Icon component={UnStarSvg} style={{ height: '16px', width: '16px',alignSelf: 'center', justifySelf:'left' }} /> */}
+                  
 
-          </Row>
-        
+                  {/* <div className='station'  >
+                    <div style={{height: '16px', width:'16px', background: 'lightgray', alignSelf: 'right'}}></div>
+                    {/* <span>{x.name}</span> */}
+                    
+                  {/* </div>  */}
+                  */}
+                  {/* <Icon component={UnStarSvg} style={{ height: '16px', width: '16px', marginRight: '8px'}} /> */ }
+                </li>)}
+            </ul>
+          </Col>
+        </Row>
       </div>
     )
   }
