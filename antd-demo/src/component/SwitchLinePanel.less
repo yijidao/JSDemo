@@ -48,11 +48,25 @@
         background: #0A3D5D;
       }
 
+
+      // & .UnStarIcon:hover {
+      //   visibility: hidden;
+      // }
+
       &:hover {
         background: #0A3D5D;
+        .unStarIcon {
+          visibility: visible;
+        }
       }
 
-      
+      .unStarIcon {
+        visibility: collapse;
+        color: #F8E71C;
+        // background-color: transparent;
+        height: 16px;
+        width: 16px;
+      }
     }
   }
 
