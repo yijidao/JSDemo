@@ -1,7 +1,7 @@
-import logo from './logo.svg';
-import './App.css';
-import { Button } from 'antd';
-import SwitchLinePanel from './component/SwitchLinePanel.js';
+import './App';
+import Home from './component/Home'
+
+
 
 // function App() {
 //   return (
@@ -26,8 +26,9 @@ import SwitchLinePanel from './component/SwitchLinePanel.js';
 
 function App() {
   return (<div className="App">
+    <Home />
     {/* <Button type="primary">Button</Button> */}
-    <SwitchLinePanel />
+    {/* <SwitchLinePanel /> */}
   </div>);
 }
 

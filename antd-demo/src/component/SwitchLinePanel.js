@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './SwitchLinePanel.less';
-import { Row, Col } from 'antd';
+import { Row, Col, Select } from 'antd';
 import Icon from '@ant-design/icons';
 import { HomeSvg, StarSvg, UnStarSvg } from './Svg.js';
 
@@ -91,27 +91,19 @@ export default class SwitchLinePanel extends Component {
   }
 
   render() {
-    let lines, star = [];
-    if (this.state.lines) {
-      lines = this.state.lines;
-    }
-
-
-    if (this.state.starStations) {
-      star = this.state.starStations;
-
-    }
+    let {lines, starStations} = this.state;
 
     return (
       <div className='container'  >
         <Row style={{ height: '48px', borderBottom: '1px solid #17557F', alignContent: 'center', paddingLeft: '18px', paddingRight: '18px' }}>
           <Icon component={HomeSvg} style={{ height: '16px', width: '16px', color: '#13FFF5', alignSelf: 'center' }} />
+          {/* <Select style={{width:'300px'}} /> */}
           <span style={{ margin: '0 16px', color: '#13FFF5' }}>线网全景</span>
         </Row>
         <Row>
           <Col span={8} style={{ borderRight: '1px solid #17557F' }}>
             <ul>
-              {star.map(x =>
+              {starStations?.map(x =>
                 <li style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: '32px', paddingRight: '16px' }} >
                   {x.name}
                   <Icon component={StarSvg} style={{ height: '16px', width: '16px', color: '#F8E71C' }} onClick={(e) => this.unstar2ByStation(x, e)} />
@@ -121,12 +113,12 @@ export default class SwitchLinePanel extends Component {
           </Col>
           <Col span={8} >
             <ul>
-              {lines.map(x => <li onClick={(e) => this.changeSelected(x.id, e)} className={x.selected ? 'selected' : ''}>{x.name}</li>)}
+              {lines?.map(x => <li onClick={(e) => this.changeSelected(x.id, e)} className={x.selected ? 'selected' : ''}>{x.name}</li>)}
             </ul>
           </Col>
           <Col span={8} >
             <ul>
-              {this.state.lines.find(x => x.selected)?.stations.map(x =>
+              {lines?.find(x => x.selected)?.stations.map(x =>
                 <li style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: '32px', paddingRight: '16px' }} >
                   {x.name}
 
