@@ -1,0 +1,49 @@
+@keyframes slideUpIn {
+    0% {
+        transform: scaleY(0.8);
+        transform-origin: 0% 0%;
+        opacity: 0;
+        visibility: collapse;
+    }
+
+    100% {
+        transform: scaleY(1);
+        transform-origin: 0% 0%;
+        opacity: 1;
+        // visibility: visible;
+    }
+}
+
+@keyframes slideUpOut {
+    0% {
+      transform: scaleY(1);
+      transform-origin: 0% 0%;
+      opacity: 1;
+      visibility: visible;
+    }
+  
+    100% {
+      transform: scaleY(0.8);
+      transform-origin: 0% 0%;
+      opacity: 0;
+    //   visibility: hidden;
+    }
+  }
+  
+
+.test {
+    animation-duration: 0.2s;
+    visibility: collapse;
+    &.enter {
+        visibility: visible;
+        
+        animation-name: slideUpIn;
+    }
+    &.leave{
+        
+        
+        animation-name: slideUpOut; 
+        visibility: collapse;
+    }
+    
+}
