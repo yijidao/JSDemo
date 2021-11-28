@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PromiseDemo</title>
+</head>
+
+<body>
+    <input type="button" onclick="promiseBase(true)" value="click" />
+    <input type="button" onclick="promiseBase(false)" value="click2" />
+    <input type="button" onclick="multiplePromise()" value="click3" />
+    <input type="button" onclick="promiseAll()" value="all" />
+    <input type="button" onclick="promiseRace()" value="race" />
+    <input type="button" onclick="promiseAllSettled()" value="allSettled" />
+    <input type="button" onclick="promiseAny()" value="any" />
+
+</body>
+<script>
+    // primise 有三种状态，pending(执行中) fulfilled(已完成) rejected(已失败)
+    function promiseBase(args) {
+        let promise = new Promise((resolve, reject) => { // Primise 接受一个 (funcation,function) => void 的委托
+                setTimeout(() => {
+                    args ? resolve(1) : reject(2);
+                }, 1000);
+                return; // 执行完 resolve 或者 reject 之后就应该 return 掉。
+                console.log("这里不应该执行");
+            }).then(value => { // then 接受两个参数的委托，一个在 resolve 之后执行，一个在 reject 之后执行。
+                console.log(value);
+                return "then"; // 
+            }, error => console.log(error))
+            .then(value => {
+                console.log(value);
+            }).catch(error => console.log(`catch ${error}`)) // catch 可以在 reject 之后执行
+            .finally(() => { // finally 
+                console.log("finally");
+            });
+    }
+
+    // 多个 promise 嵌套，会等待被嵌套的 promise
+    function multiplePromise() {
+        let p = new Promise((rs, rj) => {
+            setTimeout(() => rs("p resolve"), 3000);
+        });
+        let p2 = new Promise((rs, rj) => {
+            rs(p);
+        }).then(value => console.log(value))
+    }
+    // all() 等待所有 promise fulfilled，一个失败就无法执行
+    function promiseAll() {
+        let promises = [1000, 2000, 3000].map(x =>
+            new Promise((resolve, reject) => setTimeout(() => resolve(x), x)).then(x => {
+                console.log(x);
+                return x;
+            })
+        );
+        Promise.all(promises).then(x => console.log(x));
+
+        promises = [1000, 2000, 3000].map(x =>
+            new Promise((resolve, reject) => setTimeout(() => {
+                x === 2000 ? reject(x) : resolve(x);
+            }, x)).then(x => {
+                console.log(x);
+                return x;
+            })
+        );
+        Promise.all(promises).then(x => console.log(x));
+    }
+
+    // race() 等待第一个 promise fulfilled，失败就无法执行
+    function promiseRace() {
+        let promises = [1000, 2000, 3000].map(x =>
+            new Promise((resolve, reject) => setTimeout(() => resolve(x), x)).then(x => {
+                console.log(x);
+                return x;
+            })
+        );
+        Promise.race(promises).then(x => console.log(x));
+        promises = [1000, 2000, 3000].map(x =>
+            new Promise((resolve, reject) => setTimeout(() => {
+                x === 1000 ? reject(x) : resolve(x)
+            }, x)).then(x => {
+                console.log(x);
+                return x;
+            })
+        );
+        Promise.race(promises).then(x => console.log(x));
+    }
+    // all 的另一个版本，失败不会中止执行
+    function promiseAllSettled() {
+        promises = [1000, 2000, 3000].map(x =>
+            new Promise((resolve, reject) => setTimeout(() => {
+                x === 2000 ? reject(x) : resolve(x);
+            }, x)).then(x => {
+                console.log(x);
+                return x;
+            })
+        );
+        Promise.allSettled(promises).then(x => console.log(x));
+    }
+    // race 的另一个版本，失败不会中止执行
+    function promiseAny() {
+        let promises = [1000, 2000, 3000].map(x =>
+            new Promise((resolve, reject) => setTimeout(() => resolve(x), x)).then(x => {
+                console.log(x);
+                return x;
+            })
+        );
+        Promise.any(promises).then(x => console.log(x));
+        promises = [1000, 2000, 3000].map(x =>
+            new Promise((resolve, reject) => setTimeout(() => {
+               reject(x);
+            }, x)).then(x => {
+                console.log(x);
+                return x;
+            })
+        );
+        // Promise.any(promises).then(x => console.log(x));
+        // promises = [1000, 2000, 3000].map(x =>
+        //     new Promise((resolve, reject) => setTimeout(() => {
+        //         x === 3000 ? reject(x) : resolve(x)
+        //     }, x)).then(x => {
+        //         console.log(x);
+        //         return x;
+        //     })
+        // );
+        // Promise.any(promises).then(x => console.log(x));
+    }
+</script>
+
+</html>
