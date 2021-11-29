@@ -6,7 +6,7 @@ import './Home.less';
 import SwitchLinePanel from './SwitchLinePanel';
 import EventStatistics from './EventStatistics';
 import bg from '../image/bg.png';
-
+import TestTs from './TestTs';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -31,12 +31,18 @@ export default class Home extends Component {
                 事件统计
               </Link>
             </Menu.Item>
+            <Menu.Item >
+              <Link to='/TestTs'>
+                TestTs
+              </Link>
+            </Menu.Item>
           </Menu>
         </Sider>
         <Content style={{backgroundImage: `url(${bg})`}}>
           <Routes>
             <Route path='/switchLinePanel' element={<SwitchLinePanel />} />
             <Route path='/eventStatistics' element={<EventStatistics />} />
+            
           </Routes>
         </Content>
       </Layout>

@@ -1,4 +1,6 @@
+import { Button } from 'antd';
 import React, { Component } from 'react';
+
 
 export class Count extends Component {
     static propTypes = {
@@ -18,7 +20,7 @@ export class Count extends Component {
         return (
             <div>
                 count: {this.state.count}
-                <input type="button" onClick={e => this.handleClick()} value="ClickMe" />
+                <Button onClick={_ => this.handleClick()}>Click</Button>
             </div>
         )
     }
