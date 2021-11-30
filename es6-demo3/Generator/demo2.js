@@ -1,4 +1,4 @@
-// ### next 
+// ### Generator.prototype.next()
 // yield 本身是不会返回值的，但是调用 next() 的时候，可以给 next() 传参，作为上一个 yield 返回的值。
 // 但是给 generator 传初始值必须通过给 generator() 传参，直接在第一次调用 next() 时赋值是没有用的。
 function* foo(x) {
