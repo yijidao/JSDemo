@@ -48,5 +48,38 @@ await t2.next();
 await t2.next();
 // 通过 for await...of 来实现
 for await(const i of t2) {
-    
+
 }
+
+
+
+function AsyncMethod(value) {
+    return new Promise(resolve => setTimeout(() => resolve(value), 1000));
+}
+
+// ### 通过 generator 和 for await...of 来实现异步迭代
+// class Test3 {
+//     [Symbol.iterator] = async function* () {
+
+//         yield AsyncMethod(1);
+//         yield AsyncMethod(2);
+//         yield AsyncMethod(3);
+//     }
+// }
+
+// let test3 = new Test3();
+
+// for await (const i of test3) {
+//     console.log(i);
+// }
+
+// let g = test3[Symbol.iterator]();
+// g.next().then(x => console.log(x));
+// g.next().then(x => console.log(x));
+// g.next().then(x => console.log(x));
+
+// for await (const i of g) {
+//     console.log(i);
+// }
+// console.log('over');
+
