@@ -1,10 +1,14 @@
 import './App.less';
-import Demo1 from './component/HookDemo1'
+import HookHome from './component/HookHome';
+import ContextHome from './component/ContextHome';
+import React from 'react';
 
 function App() {
   return (
     <div className="App">
-      <Demo1 />
+
+      <HookHome />
+      <ContextHome />
     </div>
   );
 }

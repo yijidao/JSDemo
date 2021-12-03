@@ -25,7 +25,7 @@ class ChatApi {
     
 }
 
-let chatApi = new ChatApi();
-let chatApi2 = new ChatApi();
-console.log(chatApi.test === chatApi.test);
-console.log(chatApi.test === chatApi2.test);
+// let chatApi = new ChatApi();
+// let chatApi2 = new ChatApi();
+// console.log(chatApi.test === chatApi.test);
+// console.log(chatApi.test === chatApi2.test);
