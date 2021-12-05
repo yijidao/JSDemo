@@ -1,18 +1,11 @@
-import React, {useEffect} from 'react';
-import DataSource from './DataSource';
+import React from 'react';
 
 export default function HOCDemo1(props) {
-
-    useEffect(() => {
-        effect
-        return () => {
-            cleanup
-        }
-    }, [input])
-
     return (
         <div>
-            
+            <ul>
+                {props.item.map(x => <li>{x}</li>)}
+            </ul>
         </div>
     )
 }

@@ -1,34 +1,46 @@
-class DataSource {
-    Listeners = new Set();
-    Data1 = new Set();
-    Data2 = new Set();
+export default class DataSource {
 
-    addListener(listener) {
-        console.log(listener);
+    static Listeners = new Set();
+    static Data1 = new Set();
+    static Data2 = new Set();
+    static Flag = false;
+
+    static addListener(listener) {
+        // console.log(listener);
         this.Listeners.add(listener);
-    }
-    removeListener(listener) {
-        console.log(listener);
+    };
+
+    static removeListener(listener) {
+        // console.log(listener);
         this.Listeners.delete(listener);
+    };
+
+    static getData1() {
+        
+        return DataSource.Data1;
     }
+    static getData2() { return DataSource.Data2; }
 
-    Update() {
-        this.Listeners.forEach(x => x())
-    }
+    static _init = false;
 
-    Flag = false;
-
-    constructor() {
+    static Init() {
+        
+        if (DataSource._init) return;
         setInterval(() => {
-            if (this.Flag) {
-                this.Data1.add(`A${this.Data1.size}`);
+            if (DataSource.Flag) {
+                DataSource.Data1.add(`A${DataSource.Data1.size}`);
             }
             else {
-                this.Data2.add(`B${this.Data2.size}`);
+                DataSource.Data2.add(`B${DataSource.Data2.size}`);
             }
-        }, 1000);
+            DataSource.Flag = !DataSource.Flag;
+            DataSource.Listeners.forEach(x => x());
+            // console.log(DataSource.Data1);
+        }, 2000);
+        DataSource._init = true;
     }
-}
-const dataSource = new DataSource();
 
-export default DataSource;
+}
+
+
+
