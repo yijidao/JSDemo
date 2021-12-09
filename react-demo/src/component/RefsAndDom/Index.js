@@ -4,13 +4,15 @@ import { Component } from 'react';
 // Refs 可以用来获得 dom 实例或者 react 组件实例，所以可以用来做焦点功能。
 // React.createRef() 创建一个 Ref，Ref.current 可以获得具体的实例
 // React.createRef() 只能用于类组件，函数组件需要使用 React.useRef()
-// 也可以使用回调函数的方式来使用 Ref
+// 也可以使用回调函数的方式来使用 Ref，16.2 之前的版本只能用回调函数
+// React.forwardRef 和 React.createRef() 结合使用也可以实现 Ref 的功能
 export default function Index() {
     return (
         <div style={{ display: 'flex' }}>
             <CustomTextInput />
             <CustomTextInputFunc />
             <CustomTextInputCallback />
+            <CustomTextInputForward />
         </div>
     )
 }
@@ -76,4 +78,24 @@ class CustomTextInputCallback extends Component {
             </div>
         )
     };
+}
+
+// 使用 React.forwardRef 和 React.createRef()
+function CustomTextInputForward() {
+    const TextInput = React.forwardRef((props, ref) => (
+        <input type='text' style={{ width: '200px' }} ref={ref} />
+    ));
+
+    let ref = React.createRef();
+    
+    function handleClick() {
+        ref.current?.focus();
+    }
+
+    return (
+        <div>
+            <TextInput ref={ref} />
+            <button onClick={handleClick}>focus input</button>
+        </div>
+    );
 }
