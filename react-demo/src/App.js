@@ -3,6 +3,7 @@ import HookHome from './component/HookHome';
 import ContextHome from './component/ContextHome';
 import HOCHome from './component/HOC/HOCHome'
 import React from 'react';
+import JSXIndex from './component/JSX/index'
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
 
       <HookHome />
       <ContextHome />
-      <HOCHome />
+      {/* <HOCHome /> */}
+      <JSXIndex />
     </div>
   );
 }
