@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件基础</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <btn-counter></btn-counter>
+        <btn-counter></btn-counter>
+        <p>{{buttonFontSize}}</p>
+        <blog-post v-for="post in posts" :title="post.title" :key="post.id" @enlarge-title="buttonFontSize++"
+            :style="{fontSize: buttonFontSize + 'px'}"></blog-post>
+        <custom-input v-model="searchText"></custom-input>
+        <p>{{searchText}}</p>
+        <custom-input2 v-model="searchText"></custom-input2>
+        <slot-component>
+            通过 slot 传入值
+        </slot-component>
+        
+        <!-- 使用 :is 来实现动态组件  -->
+        <component :is="currentComponent"></component>
+    </div>
+</body>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                posts: [{
+                        id: 1,
+                        title: '标题1'
+                    },
+                    {
+                        id: 2,
+                        title: '标题2'
+                    },
+                    {
+                        id: 3,
+                        title: '标题3'
+                    },
+                ],
+                buttonFontSize: 12,
+                searchText: 'modelValue',
+                currentComponent: 'btn-counter', 
+            }
+        },
+
+    });
+
+    // 创建组件，组件可以复用
+    app.component('btn-counter', {
+        data() {
+            return {
+                count: 0
+            }
+        },
+        template: `<button @click="count++">click: {{count}}</button>`
+    });
+
+    // 使用 props 传参
+    // 使用 $emit 事件, $emit 可以冒泡模板内的事件到组件实例上
+    app.component('blog-post', {
+        props: ['title'],
+        template: `
+        <div>
+            <p>{{title}}</p>            
+            <button @click="$emit('enlarge-title')">enlarge</button>
+        </div>`,
+    });
+
+    // 通过事件实现 v-model 完成组件输入绑定
+    app.component('custom-input', {
+        props: ['modelValue'],
+        emits: ['update:modelValue'],
+        template: `
+            <input 
+                :value="modelValue"
+                @input="$emit('update:modelValue', $event.target.value)">
+        `
+    });
+    
+    // 通过 computed 属性实现 v-model 完成组件输入绑定
+    app.component('custom-input2', {
+        props: ['modelValue'],
+        emits: ['update:modelValue'],
+        template: `
+            <input  v-model="value">
+        `,
+        computed: {
+            value: {
+                get() {
+                    return this.modelValue
+                },
+                set(value){
+                    this.$emit('update:modelValue', value)
+                }
+            }
+        }
+    })
+
+    app.component('slot-component', {
+        template: `
+            <div>
+                <p>slot 插槽组件</p>
+                <slot></slot>
+            </div>
+        `
+    })
+
+    app.mount('#app');
+</script>
+
+</html>

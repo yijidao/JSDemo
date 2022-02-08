@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件处理</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 调用处理函数 -->
+        <button @click="handleClick">点击</button>
+        <p>{{msg}}</p>
+        <!-- 调用函数，并且传参 -->
+        <button @click="handleClick2('hello')">点击2</button> 
+        <!-- 可以同时触发多个事件 -->
+        <button @click="handleClick3(), handleClick()">点击3</button> 
+    </div>
+</body>
+<script>
+    Vue.createApp({
+        data() {
+            return {
+                msg: 'hello'
+            }
+        },
+        methods: {
+            handleClick() {
+                this.msg = 'hello world'
+            },
+            handleClick2(msg){
+                alert(msg);
+            },
+            handleClick3(){
+                setTimeout(() => {
+                    this.msg='handleClick3'
+                }, 1000);
+            },
+           
+        }
+    }).mount("#app")
+</script>
+</html>

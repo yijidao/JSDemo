@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>插槽</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app">
+        <slot-demo>
+            插槽内容
+        </slot-demo>
+
+        <!-- 插槽作用域：只能读取父级的数据，不能读取同级的数据 -->
+        <slot-demo2>
+            <p>{{demo2Data}}</p>
+            <p>{{appData}}</p>
+        </slot-demo2>
+
+        <slot-demo3>
+            <template v-slot:default="demo3">
+                <p>默认插槽的写法 template v-slot:default=""</p>
+                <p>{{demo3.demo3Data}}</p>
+            </template>
+        </slot-demo3>
+
+        <slot-demo3 v-slot="demo3">
+            <p>默认插槽的缩写 v-slot=""</p>
+            <p>{{demo3.demo3Data}}</p>
+        </slot-demo3>
+
+        <slot-demo3 #default="demo3">
+            <p>默认插槽的缩写 #default=""</p>
+            <p>{{demo3.demo3Data}}</p>
+        </slot-demo3>
+        
+        <!--  -->
+        <slot-demo4>
+            <template v-slot:default>
+                <p>多个插槽需要使用具体名称： template + v-slot:name</p>
+            </template>
+            <template v-slot:slot1>
+                <p>slot1</p>
+            </template>
+            <template v-slot:slot2>
+                <p>slot2</p>
+            </template>
+            <template v-slot:slot3>
+                <p>slot3</p>
+            </template>
+        </slot-demo4>
+
+        <slot-demo4>
+            <template #default>
+                <p>多个插槽需要使用具体名称： template + #name</p>
+            </template>
+            <template #slot1>
+                <p>slot1</p>
+            </template>
+            <template #slot2>
+                <p>slot2</p>
+            </template>
+            <template #slot3>
+                <p>slot3</p>
+            </template>
+        </slot-demo4>
+    </div>
+</body>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                appData: 'app data'
+            }
+        },
+    });
+
+    app.component('slotDemo', {
+        template: `
+            <div>
+                <h4>插槽</h4>
+                <slot></slot>
+            </div>
+        `,
+    });
+
+    app.component('slotDemo2', {
+        data() {
+            return {
+                demo2Data: 'demo2 data'
+            }
+        },
+        template: `
+            <div>
+                <h4>插槽作用域</h4>
+                <p>{{demo2Data}}</p>
+                <slot></slot>
+            </div>
+        `,
+    });
+
+    app.component('slotDemo3', {
+        data() {
+            return {
+                demo3Data: 'demo3 data'
+            }
+        },
+        template: `
+            <div>
+                <h4>插槽作用域</h4>
+                <slot :demo3Data="demo3Data"></slot>
+            </div>
+        `,
+    });
+
+    app.component('slotDemo4', {
+        data() {
+            return {
+                
+            }
+        },
+        template: `
+            <div>
+                <h4>多个插槽，使用 name 来区分</h4>
+                <slot></slot>
+                <slot name="slot1"></slot>
+                <slot name="slot2"></slot>
+                <slot name="slot3"></slot>
+            </div>
+        `
+    })
+
+    app.mount('#app');
+</script>
+
+</html>

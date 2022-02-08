@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表渲染</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    
+</head>
+
+<body>
+    <ul id="array-rendering">
+        <li v-for="i in items">
+            {{i.msg}}
+        </li>
+    </ul>
+    <ul id="array-with-index">
+        <li v-for="(item, i) in items">
+            {{item.msg}}-{{i}}
+        </li>
+    </ul>
+    <ul id="object-rendering">
+        <li v-for="(value, name) in myObject">
+            {{name}}:{{value}}
+        </li>
+    </ul>
+</body>
+
+
+<script>
+    // 数组渲染
+    Vue.createApp({
+        data() {
+            return {
+                items: [{
+                        msg: 'm1',
+                        key: 1
+                    },
+                    {
+                        msg: 'm2',
+                        key: 2
+                    }
+                    ,
+                    {
+                        msg: 'm3',
+                        key: 3
+                    }
+                ]
+            }
+        },
+    }).mount("#array-rendering");
+    // 数组渲染
+    Vue.createApp({
+        data() {
+            return {
+                items: [{
+                        msg: 'm1',
+                        key: 1
+                    },
+                    {
+                        msg: 'm2',
+                        key: 2
+                    }
+                    ,
+                    {
+                        msg: 'm3',
+                        key: 3
+                    }
+                ]
+            }
+        },
+    }).mount("#array-with-index");
+    // 对象渲染
+    Vue.createApp({
+        data() {
+            return {
+                myObject: {
+                    title: 'fml',
+                    author: 'jono'
+                }
+            }
+        },
+    }).mount("#object-rendering");
+    
+</script>
+</html>

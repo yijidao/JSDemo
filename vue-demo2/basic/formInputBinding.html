@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表单输入绑定</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" id="input" v-model="msg" placeholder="请输入">
+        <p>{{msg}}</p>
+        <input type="checkbox" v-model="checked">
+        <p>{{checked}}</p>
+        <input type="radio" value="One" v-model="radio">
+        <input type="radio" value="Two" v-model="radio">
+        <p>{{radio}}</p>
+        <select v-model="selected">
+            <option v-for="option in options" :value="option.value">{{option.text}}</option>
+        </select>
+        <p>{{selected}}</p>
+        <input type="radio" v-model="pick" v-bind:value="a">
+        <input type="radio" v-model="pick" v-bind:value="b">
+        <p>{{pick}}</p>
+    </div>
+</body>
+<script>
+    Vue.createApp({
+        data() {
+            return {
+                msg: '',
+                checked: false,
+                radio: 'Two',
+                selected: 2,
+                options: [{
+                        text: 'One',
+                        value: 1
+                    },
+                    {
+                        text: 'Two',
+                        value: 2
+                    },
+                    {
+                        text: 'Three',
+                        value: 3
+                    },
+                ],
+                pick: null,
+                a: '1',
+                b: '2'
+
+            }
+        },
+    }).mount("#app")
+</script>
+
+</html>

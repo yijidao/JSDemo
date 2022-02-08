@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provice / Inject</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app">
+        <root></root>
+
+        <root2></root2>
+    </div>
+</body>
+<script>
+    const app = Vue.createApp({});
+    app.component('leaf', {
+        inject: ['rootValue'],
+        template: `
+            <p>leaf</p>
+            <p>{{rootValue}}</p>
+        `
+    });
+    app.component('branch', {
+        template: `
+            <p>branch</p>
+            <leaf></leaf>
+        `
+    });
+    app.component('root', {
+        provide: {
+            rootValue: 'rootValue'
+        },
+        template: `
+            <h4>使用 provice 实现深层传值</h4>
+            <p>root</p>
+            <branch></branch>
+        `
+    });
+
+    app.component('leaf2', {
+        inject: ['rootValue', 'changeRootValue'],
+        template: `
+            <p>leaf2</p>
+            <p>{{rootValue}}</p>
+            <p>{{changeRootValue.value}}</p>
+        `
+    });
+    app.component('branch2', {
+        template: `
+            <p>branch</p>
+            <leaf2></leaf2>
+        `
+    });
+    app.component('root2', {
+        data() {
+            return {
+                rootValue: 'instancePropertyValue',
+                changeRootValue: 'changeRootValue',
+            }
+        },
+        provide() {
+            return {
+                rootValue: this.rootValue,
+                // changeRootValue: this.changeRootValue,
+                changeRootValue: Vue.computed(() => this.changeRootValue)
+            }
+        },
+        template: `
+            <h4>使用实例属性时，provide 需要返回对象</h4>
+            <h4>使用 Vue.computed 包装， 使provide 可以更新值</h4>
+
+            <p>root</p>
+            <input v-model='changeRootValue'>
+            {{changeRootValue}}
+            <branch2></branch2>
+        `
+    })
+
+
+    app.mount('#app');
+</script>
+
+</html>
