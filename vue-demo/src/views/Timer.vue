@@ -1,6 +1,6 @@
 <template >
     <div>
-        <p>现在是 {{now}}</p>
+        <p>现在是 {{ now }}</p>
         <p v-if="goOffWorkMinute > 0">
             麻溜干活！ 离下班还有：
             <span
@@ -12,8 +12,8 @@
 
         <p>
             今天周末了吗？
-            <span v-if="weekendInterval == 0">周末啦！！！</span>
-            <span v-if="weekendInterval != 0">没有。还有{{ weekendInterval }}天。</span>
+            <span v-if="weekendInterval == 0 || weekendInterval == 6">周末啦！！！</span>
+            <span v-if="weekendInterval != 0 && weekendInterval != 6">没有。今天{{dayOfWeek}}，还有{{ weekendInterval }}天。</span>
         </p>
 
         <p v-if="qingMingInterval != 0">距离清明节还有：{{ qingMingInterval }}天。</p>
@@ -26,18 +26,19 @@
 </template>
 <script>
 import * as dayjs from 'dayjs'
-// import * as isLeapYear from 'dayjs/plugin/isLeapYear' // 导入插件
-// import 'dayjs/locale/zh-cn' // 导入本地化语言
+import * as isLeapYear from 'dayjs/plugin/isLeapYear' // 导入插件
+import 'dayjs/locale/zh-cn' // 导入本地化语言
 
-// dayjs.extend(isLeapYear) // 使用插件
-// dayjs.locale('zh-cn') // 使用本地化语言
+dayjs.extend(isLeapYear) // 使用插件
+dayjs.locale('zh-cn') // 使用本地化语言
 
 export default {
 
     data() {
         return {
             now: dayjs().format('YYYY-MM-DD HH:mm'),
-            weekendInterval: 5 - dayjs().day(),
+            dayOfWeek: dayjs().format('ddd'),
+            weekendInterval: 6 - dayjs().day(),
             qingMingInterval: dayjs('2022-4-3').diff(dayjs(), 'day'),
             laborDayInterval: dayjs('2022-5-1').diff(dayjs(), 'day'),
             dragonBoatFestivalInterval: dayjs('2022-6-3').diff(dayjs(), 'day'),
