@@ -10,6 +10,7 @@
       <ul id="nav">
         <li>Home</li>
         <li>Author</li>
+        <li>Timer</li>
       </ul>
     </div>
   </div>
@@ -19,12 +20,13 @@
   <div id="content">
     <div id="last-card"></div>
     <div id="cards">
-      <div id="left-card">1</div>
-      <div id="center-card">2</div>
-      <div id="right-card">3</div>
+      <div id="left-card"></div>
+      <div id="center-card"></div>
+      <div id="right-card"></div>
     </div>
-
+    <div id="highlight-section"></div>
   </div>
+  <div id="footer"></div>
 </template>
 <script>
   export default {
@@ -37,8 +39,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-
+    margin: 0px 0px 24px 0px;
+    background-color: #f5f5f5;
   }
 
   #nav {
@@ -49,12 +51,13 @@
 
   #nav>li {
     list-style: none;
-    padding: 10px;
+    padding-right: 10px;
   }
 
   #head-section {
     height: 300px;
     background-color: #f5f5f5;
+    
   }
 
   #content {
@@ -65,18 +68,37 @@
     
     height: 243px;
     background-color: #f5f5f5;
+    box-shadow: var(--el-box-shadow-base);
+    border: 1px solid var(--el-border-color-base);
+    border-radius: var(--el-border-radius-base);
   }
   #cards {
     display: flex;
+    margin: 24px 0px;
     height: 200px;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-around;
+    align-items: stretch;
   }
   #cards>div {
-    height: 100%;
-    width: 100%;
-    margin: 10px;
-    background-color: red;
+    flex: 1;
+    
+    margin-right: 16px;
+    background-color: #f5f5f5;
+    box-shadow: var(--el-box-shadow-base);
+  }
+  
+  #cards div:last-of-type  {
+    margin-right: 0;    
+  }
+  #highlight-section {
+    height: 500px;
+    background-color: #f5f5f5;
+    border-radius: var(--el-border-radius-base);
+  }
+  #footer {
+    margin: 24px 0 0 0 ;
+    height: 100px;
+    background-color: #f5f5f5;
   }
 </style>
 
